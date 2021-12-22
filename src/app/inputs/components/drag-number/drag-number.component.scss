@@ -1,0 +1,29 @@
+:host {
+  input {
+    display: block;
+    background: grey;
+    color: azure;
+    padding: 5px 10px;
+    text-align: center;
+    border: 1px solid darken(grey, 10);
+    outline: none;
+
+    &::selection {
+      background: none;
+    }
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    &[type=number] {
+      -moz-appearance: textfield;
+    }
+  }
+}
