@@ -1,8 +1,6 @@
 import {Component, Input, Renderer2} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
-
-type Consumer = (value: any) => void;
-type Function = () => void;
+import {Consumer, Function} from "../../../shared/types/types";
 
 @Component({
   selector: 'drag-number',
@@ -17,13 +15,12 @@ type Function = () => void;
   ]
 })
 export class DragNumberComponent implements ControlValueAccessor {
+  @Input() step: number = 1;
+  @Input() multiplier: number = 10;
 
-  @Input() value: number = 0;
-  @Input() smallStep: number = 1;
-  @Input() bigStep: number = 10;
-
-  touched = false;
+  value: number = 0;
   disabled = false;
+  touched = false;
 
   onChange: Consumer = (value: number) => {
   };
@@ -38,9 +35,9 @@ export class DragNumberComponent implements ControlValueAccessor {
     this.markAsTouched();
     if (!this.disabled) {
       const unListenMouseMove = this.renderer.listen('document', 'mousemove', event => {
-        const stepSize = event.shiftKey ? this.bigStep : this.smallStep;
+        const stepSize = event.shiftKey ? (this.step * this.multiplier) : this.step;
         const delta = (event.x - initialX)
-        this.value = this.value + (delta * stepSize);
+        this.writeValue(this.value + (delta * stepSize));
         this.onChange(this.value);
         event.target.blur();
         initialX = event.x;

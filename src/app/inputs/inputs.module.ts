@@ -1,18 +1,21 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { DragNumberComponent } from './components/drag-number/drag-number.component';
-
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {DragNumberComponent} from './components/drag-number/drag-number.component';
+import {DragNumberSidesComponent} from './components/drag-number-sides/drag-number-sides.component';
 
 
 @NgModule({
   declarations: [
-    DragNumberComponent
+    DragNumberComponent,
+    DragNumberSidesComponent
   ],
   exports: [
-    DragNumberComponent
+    DragNumberComponent,
+    DragNumberSidesComponent
   ],
   imports: [
     CommonModule
   ]
 })
-export class InputsModule { }
+export class InputsModule {
+}

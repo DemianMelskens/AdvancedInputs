@@ -1,3 +1,7 @@
-<div class="container">
-  <drag-number></drag-number>
-</div>
+<form [formGroup]="form" class="container">
+  <drag-number-sides formGroupName="sides" [step]="5"></drag-number-sides>
+</form>
+
+<p>
+  {{form.value | json}}
+</p>
