@@ -36,8 +36,8 @@ export class DragNumberComponent implements ControlValueAccessor {
     if (!this.disabled) {
       const unListenMouseMove = this.renderer.listen('document', 'mousemove', event => {
         const stepSize = event.shiftKey ? (this.step * this.multiplier) : this.step;
-        const delta = (event.x - initialX)
-        this.writeValue(this.value + (delta * stepSize));
+        const deltaStep = (event.x - initialX) * stepSize
+        this.writeValue(this.value + deltaStep);
         this.onChange(this.value);
         event.target.blur();
         initialX = event.x;

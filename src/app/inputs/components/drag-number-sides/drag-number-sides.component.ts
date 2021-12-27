@@ -1,6 +1,6 @@
-import {Component, Input} from '@angular/core';
-import {ControlValueAccessor, FormBuilder, FormGroup, NG_VALUE_ACCESSOR} from "@angular/forms";
-import {Consumer, Function} from "../../../shared/types/types";
+import {Component, Input, Renderer2} from '@angular/core';
+import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
+import {Consumer, Function, Vector4D, VectorType} from "../../../shared/types/types";
 
 @Component({
   selector: 'drag-number-sides',
@@ -18,30 +18,37 @@ export class DragNumberSidesComponent implements ControlValueAccessor {
   @Input() step: number = 1;
   @Input() multiplier: number = 10;
 
-  private form: FormGroup;
+  value: Vector4D = {x: 0, y: 0, z: 0, w: 0};
   disabled = false;
   touched = false;
 
-  up: number = 0;
-  right: number = 0;
-  bottom: number = 0;
-  left: number = 0;
-
-  onChange: Consumer = (value: { up: number, right: number, bottom: number, left: number }) => {
+  onChange: Consumer = (value: Vector4D) => {
   };
 
   onTouched: Function = () => {
   };
 
-  constructor(private formBuilder: FormBuilder) {
-    this.form = formBuilder.group({
-      up: [{value: this.up, disabled: false}],
-      right: [{value: this.right, disabled: false}],
-      bottom: [{value: this.bottom, disabled: false}],
-      left: [{value: this.left, disabled: false}]
-    });
+  constructor(private renderer: Renderer2) {
+  }
 
-    this.form.valueChanges.subscribe(value => this.onChange(value));
+  startDrag(event: MouseEvent, type: VectorType): void {
+    let initialX = event.x;
+    this.markAsTouched();
+    if (!this.disabled) {
+      const unListenMouseMove = this.renderer.listen('document', 'mousemove', event => {
+        const stepSize = event.shiftKey ? (this.step * this.multiplier) : this.step;
+        const deltaStep = (event.x - initialX) * stepSize
+        this.value[type] = this.value[type] + deltaStep;
+
+        this.onChange(this.value);
+        event.target.blur();
+        initialX = event.x;
+      });
+      const unListenMouseUp = this.renderer.listen('document', 'mouseup', () => {
+        unListenMouseMove!();
+        unListenMouseUp!();
+      });
+    }
   }
 
   registerOnChange(fn: Consumer): void {
@@ -56,8 +63,8 @@ export class DragNumberSidesComponent implements ControlValueAccessor {
     this.disabled = isDisabled;
   }
 
-  writeValue(value: { up: number, right: number, bottom: number, left: number }): void {
-    this.form.setValue(value);
+  writeValue(value: Vector4D): void {
+    this.value = value;
   }
 
   markAsTouched() {

@@ -1,6 +1,4 @@
-<form formGroup="form">
-  <drag-number formControlName="up" [step]="step" [multiplier]="multiplier"></drag-number>
-  <drag-number formControlName="right" [step]="step" [multiplier]="multiplier"></drag-number>
-  <drag-number formControlName="bottom" [step]="step" [multiplier]="multiplier"></drag-number>
-  <drag-number formControlName="left" [step]="step" [multiplier]="multiplier"></drag-number>
-</form>
+<input type="number" [value]="value.x" (mousedown)="startDrag($event, 'x')" [disabled]="disabled"/>
+<input type="number" [value]="value.y" (mousedown)="startDrag($event, 'y')" [disabled]="disabled"/>
+<input type="number" [value]="value.z" (mousedown)="startDrag($event, 'z')" [disabled]="disabled"/>
+<input type="number" [value]="value.w" (mousedown)="startDrag($event, 'w')" [disabled]="disabled"/>
