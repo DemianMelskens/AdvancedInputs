@@ -13,7 +13,10 @@ export class AppComponent {
 
   constructor(private formBuilder: FormBuilder) {
     this.form = formBuilder.group({
-      sides: [{value: {x: 10, y: 4, z: 2, w: 14}, disabled: false}]
+      number: [{value: 2, disabled: false}],
+      vector2d: [{value: {x: 15, y: 8}, disabled: false}],
+      vector3d: [{value: {x: 15, y: 8, z: 5}, disabled: false}],
+      vector4d: [{value: {x: 15, y: 8, z: 5, w: 24}, disabled: false}]
     });
   }
 }

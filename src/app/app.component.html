@@ -1,7 +1,25 @@
 <form [formGroup]="form" class="container">
-  <drag-number-sides formGroupName="sides" [step]="5"></drag-number-sides>
+  <label>
+    number
+    <input-number formControlName="number" [step]="5"></input-number>
+  </label>
+
+  <label>
+    vector2d
+    <input-vector2d formControlName="vector2d" [step]="5"></input-vector2d>
+  </label>
+
+  <label>
+    vector3d
+    <input-vector3d formControlName="vector3d" [step]="5"></input-vector3d>
+  </label>
+
+  <label>
+    vector4d
+    <input-vector4d formControlName="vector4d" [step]="5"></input-vector4d>
+  </label>
 </form>
 
-<p>
+<small>
   {{form.value | json}}
-</p>
+</small>

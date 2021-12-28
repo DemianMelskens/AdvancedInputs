@@ -1,0 +1,43 @@
+@import "colors";
+
+:host {
+  display: inline-block;
+  box-sizing: border-box;
+  width: 100%;
+
+  .wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    min-width: 4rem;
+    border: .5px solid $border-primary;
+
+    input {
+      flex: 4;
+      min-width: 2rem;
+      color: $text-primary;
+      background: $background-dark;
+      text-align: center;
+      font-size: 1rem;
+      border: none;
+      outline: none;
+
+      &::selection {
+        background: $background-text-selection;
+      }
+
+      &:hover {
+        cursor: ew-resize;
+      }
+
+      &::-webkit-outer-spin-button,
+      &::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+
+      &[type=number] {
+        -moz-appearance: textfield;
+      }
+    }
+  }
+}

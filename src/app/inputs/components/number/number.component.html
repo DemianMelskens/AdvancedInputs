@@ -1,0 +1,7 @@
+<div class="wrapper">
+  <input #number type="number"
+         [(ngModel)]="value"
+         [disabled]="disabled"
+         (change)="onChange(number.value)"
+         (mousedown)="startDrag($event)"/>
+</div>

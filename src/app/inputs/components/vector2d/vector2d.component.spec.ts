@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DragNumberComponent } from './drag-number.component';
+import { Vector4dComponent } from './drag-number-sides.component';
 
-describe('DragNumberComponent', () => {
-  let component: DragNumberComponent;
-  let fixture: ComponentFixture<DragNumberComponent>;
+describe('DragNumberSidesComponent', () => {
+  let component: Vector4dComponent;
+  let fixture: ComponentFixture<Vector4dComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DragNumberComponent ]
+      declarations: [ Vector4dComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DragNumberComponent);
+    fixture = TestBed.createComponent(Vector4dComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -1,0 +1,76 @@
+@import "colors";
+
+:host {
+  display: inline-block;
+  box-sizing: border-box;
+  width: 100%;
+
+  .wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    min-width: 4rem;
+    border: .5px solid $border-primary;
+
+    label {
+      flex: 1;
+      max-width: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: $text-primary;
+      padding: 2.5px;
+      font-size: .8rem;
+      font-weight: bold;
+
+      &::selection {
+        background: none;
+      }
+
+      &:nth-child(1) {
+        background: red;
+      }
+
+      &:nth-child(3) {
+        background: green;
+      }
+
+      &:nth-child(5) {
+        background: blue;
+      }
+
+      &:nth-child(7) {
+        background: yellow;
+        color: black;
+      }
+    }
+
+    input {
+      flex: 2;
+      min-width: 2rem;
+      color: $text-primary;
+      background: $background-dark;
+      text-align: center;
+      font-size: 1rem;
+      border: none;
+      outline: none;
+
+      &::selection {
+        background: $background-text-selection;
+      }
+
+      &:hover {
+        cursor: ew-resize;
+      }
+
+      &::-webkit-outer-spin-button,
+      &::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+
+      &[type=number] {
+        -moz-appearance: textfield;
+      }
+    }
+  }
+}

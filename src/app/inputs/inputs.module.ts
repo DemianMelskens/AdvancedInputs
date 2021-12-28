@@ -1,20 +1,28 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {DragNumberComponent} from './components/drag-number/drag-number.component';
-import {DragNumberSidesComponent} from './components/drag-number-sides/drag-number-sides.component';
+import {NumberComponent} from './components/number/number.component';
+import {Vector3dComponent} from "./components/vector3d/vector3d.component";
+import {Vector4dComponent} from './components/vector4d/vector4d.component';
+import {FormsModule} from "@angular/forms";
+import {Vector2dComponent} from "./components/vector2d/vector2d.component";
 
 
 @NgModule({
   declarations: [
-    DragNumberComponent,
-    DragNumberSidesComponent
+    NumberComponent,
+    Vector2dComponent,
+    Vector3dComponent,
+    Vector4dComponent
   ],
   exports: [
-    DragNumberComponent,
-    DragNumberSidesComponent
+    NumberComponent,
+    Vector2dComponent,
+    Vector3dComponent,
+    Vector4dComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    FormsModule,
   ]
 })
 export class InputsModule {
