@@ -1,5 +1,6 @@
 <div class="wrapper">
   <input #number type="number"
+         [step]="step"
          [(ngModel)]="value"
          [disabled]="disabled"
          (change)="onChange(number.value)"

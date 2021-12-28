@@ -1,22 +1,29 @@
 <div class="wrapper">
-  <label for="x">X</label>
-  <input #x id="x" type="number"
-         [value]="value.x"
-         [disabled]="disabled"
-         (change)="onChange({x: x.value, y: y.value, z:z.value})"
-         (mousedown)="startDrag($event, 'x')"/>
-
-  <label for="y">Y</label>
-  <input #y id="y" type="number"
-         [value]="value.y"
-         [disabled]="disabled"
-         (change)="onChange({x: x.value, y: y.value, z:z.value})"
-         (mousedown)="startDrag($event, 'y')"/>
-
-  <label for="z">Z</label>
-  <input #z id="z" type="number"
-         [value]="value.z"
-         [disabled]="disabled"
-         (change)="onChange({x: x.value, y: y.value, z:z.value})"
-         (mousedown)="startDrag($event, 'z')"/>
+  <label for="x">
+    <span>X</span>
+    <input #x id="x" type="number"
+           [step]="step"
+           [value]="value.x"
+           [disabled]="disabled"
+           (change)="onChange({x: x.value, y: y.value, z:z.value})"
+           (mousedown)="startDrag($event, 'x')"/>
+  </label>
+  <label for="y">
+    <span>Y</span>
+    <input #y id="y" type="number"
+           [step]="step"
+           [value]="value.y"
+           [disabled]="disabled"
+           (change)="onChange({x: x.value, y: y.value, z:z.value})"
+           (mousedown)="startDrag($event, 'y')"/>
+  </label>
+  <label for="z">
+    <span>Z</span>
+    <input #z id="z" type="number"
+           [step]="step"
+           [value]="value.z"
+           [disabled]="disabled"
+           (change)="onChange({x: x.value, y: y.value, z:z.value})"
+           (mousedown)="startDrag($event, 'z')"/>
+  </label>
 </div>
