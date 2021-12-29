@@ -1,4 +1,4 @@
-import {Component, Input, Renderer2} from '@angular/core';
+import {Component, EventEmitter, Input, Output, Renderer2} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {Consumer, Function, Vector4D, VectorType4d} from "../../../shared/types/types";
 
@@ -18,11 +18,13 @@ export class Vector4dComponent implements ControlValueAccessor {
   @Input() step: number = 1;
   @Input() multiplier: number = 10;
 
+  @Output() change = new EventEmitter<Vector4D>();
+
   value: Vector4D = {x: 0, y: 0, z: 0, w: 0};
   disabled = false;
   touched = false;
 
-  onChange: Consumer = (value: Vector4D) => {
+  onChange: Consumer = (_: Vector4D) => {
   };
 
   onTouched: Function = () => {
@@ -40,8 +42,7 @@ export class Vector4dComponent implements ControlValueAccessor {
         const deltaStep = (event.x - initialX) * stepSize
         this.value[type] = this.value[type] + deltaStep;
 
-        this.onChange(this.value);
-        event.target.blur();
+        this.markAsChanged();
         initialX = event.x;
       });
       const unListenMouseUp = this.renderer.listen('document', 'mouseup', () => {
@@ -65,6 +66,11 @@ export class Vector4dComponent implements ControlValueAccessor {
 
   writeValue(value: Vector4D): void {
     this.value = value;
+  }
+
+  markAsChanged(): void {
+    this.onChange(this.value);
+    this.change.emit(this.value);
   }
 
   markAsTouched() {

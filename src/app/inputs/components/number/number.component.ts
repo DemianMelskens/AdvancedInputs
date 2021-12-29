@@ -1,4 +1,4 @@
-import {Component, Input, Renderer2} from '@angular/core';
+import {Component, EventEmitter, Input, Output, Renderer2} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
 import {Consumer, Function} from "../../../shared/types/types";
 
@@ -17,12 +17,16 @@ import {Consumer, Function} from "../../../shared/types/types";
 export class NumberComponent implements ControlValueAccessor {
   @Input() step: number = 1;
   @Input() multiplier: number = 10;
+  @Input() min!: number;
+  @Input() max!: number;
+
+  @Output() change = new EventEmitter<number>();
 
   value: number = 0;
   disabled = false;
   touched = false;
 
-  onChange: Consumer = (value: number) => {
+  onChange: Consumer = (_: number) => {
   };
   onTouched: Function = () => {
   };
@@ -37,8 +41,19 @@ export class NumberComponent implements ControlValueAccessor {
       const unListenMouseMove = this.renderer.listen('document', 'mousemove', event => {
         const stepSize = event.shiftKey ? (this.step * this.multiplier) : this.step;
         const deltaStep = (event.x - initialX) * stepSize
-        this.writeValue(this.value + deltaStep);
-        this.onChange(this.value);
+        let newValue = this.value + deltaStep;
+
+        if (this.min) {
+          newValue = Math.max(newValue, this.min);
+        }
+
+        if (this.max) {
+          newValue = Math.min(newValue, this.max);
+        }
+
+        this.value = newValue;
+
+        this.markAsChanged();
         event.target.blur();
         initialX = event.x;
       });
@@ -63,6 +78,11 @@ export class NumberComponent implements ControlValueAccessor {
 
   writeValue(value: number): void {
     this.value = value;
+  }
+
+  markAsChanged(): void {
+    this.onChange(this.value);
+    this.change.emit(this.value);
   }
 
   markAsTouched() {

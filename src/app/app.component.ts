@@ -19,4 +19,8 @@ export class AppComponent {
       vector4d: [{value: {x: 15, y: 8, z: 5, w: 24}, disabled: false}]
     });
   }
+
+  log() {
+    console.log('test');
+  }
 }

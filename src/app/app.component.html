@@ -1,7 +1,7 @@
 <form [formGroup]="form" class="container">
   <label>
     number
-    <input-number formControlName="number" [step]="5"></input-number>
+    <input-number formControlName="number" [step]="5" [min]="0" [max]="10"></input-number>
   </label>
 
   <label>

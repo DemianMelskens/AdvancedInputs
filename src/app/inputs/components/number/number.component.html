@@ -1,8 +1,10 @@
 <div class="wrapper">
-  <input #number type="number"
+  <input type="number"
          [step]="step"
-         [(ngModel)]="value"
+         [min]="min"
+         [max]="max"
+         [value]="value"
          [disabled]="disabled"
-         (change)="onChange(number.value)"
+         (change)="markAsChanged()"
          (mousedown)="startDrag($event)"/>
 </div>
