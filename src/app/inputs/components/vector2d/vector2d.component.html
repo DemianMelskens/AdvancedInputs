@@ -5,7 +5,7 @@
            [step]="step"
            [value]="value.x"
            [disabled]="disabled"
-           (change)="onChange({x: x.value, y: y.value})"
+           (change)="markAsChanged({x: x.valueAsNumber, y: y.valueAsNumber})"
            (mousedown)="startDrag($event, 'x')"/>
   </label>
 
@@ -15,7 +15,7 @@
            [step]="step"
            [value]="value.y"
            [disabled]="disabled"
-           (change)="onChange({x: x.value, y: y.value})"
+           (change)="markAsChanged({x: x.valueAsNumber, y: y.valueAsNumber})"
            (mousedown)="startDrag($event, 'y')"/>
   </label>
 </div>

@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, Output, Renderer2} from '@angular/core';
-import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
+import {NG_VALUE_ACCESSOR} from "@angular/forms";
 import {Consumer, Function, Vector2D, VectorType2d} from "../../../shared/types/types";
+import {CustomControlValueAccessor} from "../custom-control-value-accessor";
 
 @Component({
   selector: 'input-vector2d',
@@ -14,7 +15,7 @@ import {Consumer, Function, Vector2D, VectorType2d} from "../../../shared/types/
     }
   ]
 })
-export class Vector2dComponent implements ControlValueAccessor {
+export class Vector2dComponent implements CustomControlValueAccessor<Vector2D> {
   @Input() step: number = 1;
   @Input() multiplier: number = 10;
 
@@ -24,7 +25,7 @@ export class Vector2dComponent implements ControlValueAccessor {
   disabled = false;
   touched = false;
 
-  onChange: Consumer = (_: Vector2D) => {
+  onChange: Consumer<Vector2D> = (_: Vector2D) => {
   };
 
   onTouched: Function = () => {
@@ -42,7 +43,7 @@ export class Vector2dComponent implements ControlValueAccessor {
         const deltaStep = (event.x - initialX) * stepSize
         this.value[type] = this.value[type] + deltaStep;
 
-        this.markAsChanged();
+        this.markAsChanged(this.value);
         initialX = event.x;
       });
       const unListenMouseUp = this.renderer.listen('document', 'mouseup', () => {
@@ -52,7 +53,7 @@ export class Vector2dComponent implements ControlValueAccessor {
     }
   }
 
-  registerOnChange(fn: Consumer): void {
+  registerOnChange(fn: Consumer<Vector2D>): void {
     this.onChange = fn;
   }
 
@@ -68,9 +69,9 @@ export class Vector2dComponent implements ControlValueAccessor {
     this.value = value;
   }
 
-  markAsChanged(): void {
-    this.onChange(this.value);
-    this.change.emit(this.value);
+  markAsChanged(value: Vector2D): void {
+    this.onChange(value);
+    this.change.emit(value);
   }
 
   markAsTouched(): void {

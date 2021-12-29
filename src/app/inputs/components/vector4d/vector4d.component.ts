@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, Output, Renderer2} from '@angular/core';
-import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
+import {NG_VALUE_ACCESSOR} from "@angular/forms";
 import {Consumer, Function, Vector4D, VectorType4d} from "../../../shared/types/types";
+import {CustomControlValueAccessor} from "../custom-control-value-accessor";
 
 @Component({
   selector: 'input-vector4d',
@@ -14,7 +15,7 @@ import {Consumer, Function, Vector4D, VectorType4d} from "../../../shared/types/
     }
   ]
 })
-export class Vector4dComponent implements ControlValueAccessor {
+export class Vector4dComponent implements CustomControlValueAccessor<Vector4D> {
   @Input() step: number = 1;
   @Input() multiplier: number = 10;
 
@@ -24,7 +25,7 @@ export class Vector4dComponent implements ControlValueAccessor {
   disabled = false;
   touched = false;
 
-  onChange: Consumer = (_: Vector4D) => {
+  onChange: Consumer<Vector4D> = (_: Vector4D) => {
   };
 
   onTouched: Function = () => {
@@ -42,7 +43,7 @@ export class Vector4dComponent implements ControlValueAccessor {
         const deltaStep = (event.x - initialX) * stepSize
         this.value[type] = this.value[type] + deltaStep;
 
-        this.markAsChanged();
+        this.markAsChanged(this.value);
         initialX = event.x;
       });
       const unListenMouseUp = this.renderer.listen('document', 'mouseup', () => {
@@ -52,7 +53,7 @@ export class Vector4dComponent implements ControlValueAccessor {
     }
   }
 
-  registerOnChange(fn: Consumer): void {
+  registerOnChange(fn: Consumer<Vector4D>): void {
     this.onChange = fn;
   }
 
@@ -68,9 +69,9 @@ export class Vector4dComponent implements ControlValueAccessor {
     this.value = value;
   }
 
-  markAsChanged(): void {
-    this.onChange(this.value);
-    this.change.emit(this.value);
+  markAsChanged(value: Vector4D): void {
+    this.onChange(value);
+    this.change.emit(value);
   }
 
   markAsTouched() {

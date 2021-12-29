@@ -1,4 +1,4 @@
-export type Consumer = (value: any) => void;
+export type Consumer<T> = (value: T) => void;
 export type Function = () => void;
 
 export type VectorType2d = 'x' | 'y';

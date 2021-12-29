@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, Output, Renderer2} from '@angular/core';
-import {ControlValueAccessor, NG_VALUE_ACCESSOR} from "@angular/forms";
+import {NG_VALUE_ACCESSOR} from "@angular/forms";
 import {Consumer, Function} from "../../../shared/types/types";
+import {CustomControlValueAccessor} from "../custom-control-value-accessor";
 
 @Component({
   selector: 'input-number',
@@ -14,7 +15,7 @@ import {Consumer, Function} from "../../../shared/types/types";
     }
   ]
 })
-export class NumberComponent implements ControlValueAccessor {
+export class NumberComponent implements CustomControlValueAccessor<number> {
   @Input() step: number = 1;
   @Input() multiplier: number = 10;
   @Input() min!: number;
@@ -26,7 +27,7 @@ export class NumberComponent implements ControlValueAccessor {
   disabled = false;
   touched = false;
 
-  onChange: Consumer = (_: number) => {
+  onChange: Consumer<number> = (_: number) => {
   };
   onTouched: Function = () => {
   };
@@ -41,19 +42,8 @@ export class NumberComponent implements ControlValueAccessor {
       const unListenMouseMove = this.renderer.listen('document', 'mousemove', event => {
         const stepSize = event.shiftKey ? (this.step * this.multiplier) : this.step;
         const deltaStep = (event.x - initialX) * stepSize
-        let newValue = this.value + deltaStep;
 
-        if (this.min) {
-          newValue = Math.max(newValue, this.min);
-        }
-
-        if (this.max) {
-          newValue = Math.min(newValue, this.max);
-        }
-
-        this.value = newValue;
-
-        this.markAsChanged();
+        this.markAsChanged(this.value + deltaStep);
         event.target.blur();
         initialX = event.x;
       });
@@ -64,7 +54,7 @@ export class NumberComponent implements ControlValueAccessor {
     }
   }
 
-  registerOnChange(fn: Consumer): void {
+  registerOnChange(fn: Consumer<number>): void {
     this.onChange = fn;
   }
 
@@ -80,9 +70,13 @@ export class NumberComponent implements ControlValueAccessor {
     this.value = value;
   }
 
-  markAsChanged(): void {
-    this.onChange(this.value);
-    this.change.emit(this.value);
+  markAsChanged(value: number): void {
+    value = this.min != undefined ? Math.max(value, this.min) : value;
+    value = this.max != undefined ? Math.min(value, this.max) : value;
+    this.value = value;
+
+    this.onChange(value);
+    this.change.emit(value);
   }
 
   markAsTouched() {

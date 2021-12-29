@@ -5,7 +5,7 @@
            [step]="step"
            [value]="value.x"
            [disabled]="disabled"
-           (change)="onChange({x: x.value, y: y.value, z:z.value, w:w.value})"
+           (change)="markAsChanged({x: x.valueAsNumber, y: y.valueAsNumber, z:z.valueAsNumber, w:w.valueAsNumber})"
            (mousedown)="startDrag($event, 'x')"/>
   </label>
   <label for="y">
@@ -14,7 +14,7 @@
            [step]="step"
            [value]="value.y"
            [disabled]="disabled"
-           (change)="onChange({x: x.value, y: y.value, z:z.value, w:w.value})"
+           (change)="markAsChanged({x: x.valueAsNumber, y: y.valueAsNumber, z:z.valueAsNumber, w:w.valueAsNumber})"
            (mousedown)="startDrag($event, 'y')"/>
   </label>
   <label for="z">
@@ -23,7 +23,7 @@
            [step]="step"
            [value]="value.z"
            [disabled]="disabled"
-           (change)="onChange({x: x.value, y: y.value, z:z.value, w:w.value})"
+           (change)="markAsChanged({x: x.valueAsNumber, y: y.valueAsNumber, z:z.valueAsNumber, w:w.valueAsNumber})"
            (mousedown)="startDrag($event, 'z')"/>
   </label>
   <label for="w">
@@ -32,7 +32,7 @@
            [step]="step"
            [value]="value.w"
            [disabled]="disabled"
-           (change)="onChange({x: x.value, y: y.value, z:z.value, w:w.value})"
+           (change)="markAsChanged({x: x.valueAsNumber, y: y.valueAsNumber, z:z.valueAsNumber, w:w.valueAsNumber})"
            (mousedown)="startDrag($event, 'w')"/>
   </label>
 </div>
